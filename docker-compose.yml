@@ -1,0 +1,58 @@
+version: '3'
+services:
+  frontend:
+    container_name: 'nthu-chatbot-client'
+    build: ../NTHU-Chatbot/
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - TZ=Asia/Taipei
+    logging:
+      options:
+        max-size: "50m"
+    depends_on:
+      - backend
+  flask:
+    container_name: 'nthu-chatbot-nlp-api'
+    build: ../NTHU-Campus-Agent-LINE-Flask/
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - TZ=Asia/Taipei
+    logging:
+      options:
+        max-size: "50m"
+    depends_on:
+      - backend
+  backend:
+    container_name: 'nthu-chatbot-api'
+    build: ../NTHU-Chatbot-API/
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - TZ=Asia/Taipei
+    volumes:
+      - backup-volume:/usr/src/app/backup
+    logging:
+      options:
+        max-size: "50m"
+    depends_on:
+      - db
+  db:
+    container_name: 'mongo'
+    image: mongo
+    environment:
+      - TZ=Asia/Taipei
+    volumes:
+      - data-volume:/data/db
+    logging:
+      options:
+        max-size: "50m"
+    ports:
+      - "27017:27017"
+volumes:
+    data-volume:
+    backup-volume:

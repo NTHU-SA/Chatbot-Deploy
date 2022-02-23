@@ -47,7 +47,9 @@ services:
     environment:
       - TZ=Asia/Taipei
     volumes:
-      - data-volume:/data/db
+        - /data/*:/src/data/*
+    command: 
+        - mongoimport --host mongodb --db my-mongo --collection orders --file /src/data/orders.json
     logging:
       options:
         max-size: "50m"

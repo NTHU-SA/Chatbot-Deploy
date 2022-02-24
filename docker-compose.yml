@@ -41,20 +41,27 @@ services:
         max-size: "50m"
     depends_on:
       - db
-  db:
-    container_name: 'mongo'
+  
+  mongodb:
+    container_name: 'mongodb'
     image: mongo
+    ports:
+      - 27017:27017
+  db:
+    container_name: 'mongo-load'
     environment:
       - TZ=Asia/Taipei
-    volumes:
-        - /data/*:/src/data/*
-    command: 
-        - mongoimport --host mongodb --db my-mongo --collection orders --file /src/data/orders.json
     logging:
       options:
         max-size: "50m"
-    ports:
-      - "27017:27017"
+    image: mongo
+    links:
+      - mongodb
+    volumes:
+      - ../nthu_chatbot_db/:/mnt/
+      - .:/home
+    command:
+      /home/mongo-import.sh
 volumes:
     data-volume:
     backup-volume:

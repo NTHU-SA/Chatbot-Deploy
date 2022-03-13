@@ -14,4 +14,6 @@
     - `export PROJECT_ID=chatbot-dev-344011`
 2. export `$REGION` to environment variable.
     - `export REGION=asia-east1`
-3. run `kubernetes_deploy.sh`
+3. export `$CLUSTER` to environment variable.
+    - `export CLUSTER=autopilot-cluster-1`
+5. run `kubernetes_deploy.sh`

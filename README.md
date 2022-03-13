@@ -9,7 +9,7 @@
     - set ip to the one represents host machine
 4. Go to this repository and then `docker-compose up`.
 
-#　How to build on production environment
+# How to build on production environment
 1. fix Nginx.conf (NTHU-Chatbot)
     - location/api set ip to the one represents host machiine
 2. fix mongo-import.sh (Chatbot-Deploy)

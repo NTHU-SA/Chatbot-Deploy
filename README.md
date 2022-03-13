@@ -12,4 +12,6 @@
 # How to build on production environment
 1. export `$PROJECT_ID` to environment variable
     - `export PROJECT_ID=chatbot-dev-344011`
-2. run kubernetes_deploy.sh
+2. export `$REGION` to environment variable.
+    - `export REGION=asia-east1`
+3. run `kubernetes_deploy.sh`

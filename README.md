@@ -17,5 +17,7 @@ export REGION=asia-east1
 export CLUSTER=autopilot-cluster-1
 export LINE_OFFICIAL_TOKEN=
 export LINE_WEBHOOK_STRING=
+export MONGO_ACCOUNT=
+export MONGO_PASS=
 ```
 2. run `kubernetes_deploy.sh`

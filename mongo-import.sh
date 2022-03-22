@@ -1,4 +1,4 @@
-host=192.168.106.44
+host=127.0.0.1
 mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin --host $host --db nthu_chatbot_db --collection academic_phone --jsonArray --file /mnt/academic_phone.json
 mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin --host $host --db nthu_chatbot_db --collection admin --jsonArray --file /mnt/admin.json
 mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin --host $host --db nthu_chatbot_db --collection administration_phone --jsonArray --file /mnt/administration_phone.json
@@ -17,3 +17,4 @@ mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin 
 mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin --host $host --db nthu_chatbot_db --collection token --jsonArray --file /mnt/token.json
 mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin --host $host --db nthu_chatbot_db --collection user --jsonArray --file /mnt/user.json
 mongoimport -u ${MONGO_ACCOUNT} -p ${MONGO_PASS} --authenticationDatabase admin --host $host --db nthu_chatbot_db --collection user_map_record --jsonArray --file /mnt/user_map_record.json
+

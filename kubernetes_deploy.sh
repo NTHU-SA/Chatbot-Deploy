@@ -82,11 +82,7 @@ docker push gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification
 cat NTHU-Chatbot-PushNotification/gke/push-notification.yaml | envsubst > NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
 kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
 
-
 # Import mongo files
 kubectl port-forward service/mongo-service 27017:27017 &> /dev/null &
 cd ..
 ./mongo-import.sh
-
-
-

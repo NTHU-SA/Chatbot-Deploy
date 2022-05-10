@@ -82,21 +82,20 @@ docker push gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification
 cat NTHU-Chatbot-PushNotification/gke/push-notification.yaml | envsubst > NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
 kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
 
-# Ssh into mongo pod
-# $ mongo
-# 
-# use admin
-# db.createUser(
-#   {
-#     user: "myUserAdmin",
-#     pwd: "abc123",
-#     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-#   }
-# )
-#
-
+<<comment
+1. $ kubectl exec -it <pod name> -n default -- bash
+2. $ mongo
+ 
+use nthu_chatbot_db
+db.createUser({
+    user: "admin",
+    pwd: "admin",
+    roles: [ { role: "userAdminAnyDatabase", db: "nthu_chatbot_db" } ]
+})
+comment
 
 # Import mongo files
 kubectl port-forward service/mongo-service 27017:27017 &> /dev/null &
 cd ..
 ./mongo-import.sh
+

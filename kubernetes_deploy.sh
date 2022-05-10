@@ -4,9 +4,9 @@ rm -rf repos
 mkdir repos
 cd repos
 
-git clone https://github.com/NTHU-SA/NTHU-Chatbot-API.git
-git clone https://github.com/NTHU-SA/NTHU-Chatbot.git
-git clone https://github.com/NTHU-SA/NTHU-Campus-Agent-LINE-Flask.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot-API.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Campus-Agent-LINE-Flask.git
 
 gcloud container clusters get-credentials ${CLUSTER} --zone ${REGION}
 

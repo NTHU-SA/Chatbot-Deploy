@@ -79,7 +79,6 @@ cd ..
 
 cat NTHU-Chatbot-PushNotification/gke/push-notification.yaml | envsubst > NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
 kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
-kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification-service.yaml
 
 
 # Import mongo files

@@ -74,7 +74,7 @@ kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-ingress.yaml
 
 # Auto push notification bot
 cd NTHU-Chatbot-PushNotification
-docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
+cat Dockerfile | envsubst | docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
 cd ..
 
 docker push gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification

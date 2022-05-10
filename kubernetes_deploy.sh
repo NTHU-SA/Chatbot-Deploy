@@ -7,6 +7,7 @@ cd repos
 git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot-API.git
 git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot.git
 git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Campus-Agent-LINE-Flask.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot-PushNotification
 
 gcloud container clusters get-credentials ${CLUSTER} --zone ${REGION}
 
@@ -75,3 +76,12 @@ kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-ingress.yaml
 kubectl port-forward service/mongo-service 27017:27017 &> /dev/null &
 cd ..
 ./mongo-import.sh
+
+
+# Auto push notification bot
+cd NTHU-Chatbot-PushNotification
+docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
+cd ..
+
+kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml
+kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification-service.yaml

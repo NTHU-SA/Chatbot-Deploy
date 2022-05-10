@@ -77,7 +77,8 @@ cd NTHU-Chatbot-PushNotification
 docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
 cd ..
 
-kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml
+cat NTHU-Chatbot-PushNotification/gke/push-notification.yaml | envsubst > NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
+kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
 kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification-service.yaml
 
 

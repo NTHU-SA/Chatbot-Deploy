@@ -1,4 +1,4 @@
-# kubectl delete --all pods
+kubectl delete daemonsets, replicasets, services, deployments, pods, rc, ingress --all --all-namespaces
 
 rm -rf repos
 mkdir repos

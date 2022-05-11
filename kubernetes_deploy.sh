@@ -84,20 +84,20 @@ kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst
 
 <<comment
 1. $ kubectl exec -it <pod name> -n default -- bash
+
 2. $ mongo
 use admin
 db.createUser({
-    user: "admin",
-    pwd: "admin",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-})
+    user: 'admin',
+    pwd: 'admin',
+    roles: [ { role: 'root', db: 'admin' } ]
+});
+
 3. mongo -u "admin" -p "admin" --authenticationDatabase "admin"
-use nthu_chatbot_db
-db.createUser({
-    user: "admin",
-    pwd: "admin",
-    roles: [ { role: "dbOwner", db: "nthu_chatbot_db" } ]
-})
+use admin;
+db.grantRolesToUser('admin', [{ role: 'root', db: 'admin' }])
+
+4. port forward mongo to cloud shell
 comment
 
 # Import mongo files

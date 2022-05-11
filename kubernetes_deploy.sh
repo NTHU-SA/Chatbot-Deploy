@@ -73,6 +73,11 @@ kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-service.yaml
 kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-ingress.yaml
 
 # Auto push notification bot
+export NGINXIP=$(kubectl get service --all-namespaces | grep nginx-service | grep -Po "[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}")
+echo "--------"
+echo "NGINX is running at ${NGINXIP}"
+echo "--------"
+
 cd NTHU-Chatbot-PushNotification
 cat Dockerfile | envsubst | docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
 cd ..

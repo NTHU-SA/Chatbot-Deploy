@@ -73,7 +73,9 @@ kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-service.yaml
 kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-ingress.yaml
 
 cd NTHU-Chatbot-PushNotification
-cat Dockerfile | envsubst | docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
+cat Dockerfile | envsubst > Dockerfile.subst
+mv Dockerfile.subst Dockerfile
+docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
 cd ..
 
 docker push gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification

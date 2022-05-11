@@ -86,7 +86,7 @@ kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst
 <<comment
 1. $ kubectl exec -it <pod name> -n default -- bash
 
-2. $ mongo
+2. $ mongosh -u admin -p admin
 use admin
 db.createUser({
     user: 'admin',
@@ -103,8 +103,8 @@ comment
 
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-apt-get update
-apt-get install -y mongodb-org
+sudo apt-get update
+sudo apt-get install -y mongodb-org
 
 # Import mongo files
 kubectl port-forward service/mongo-service 27017:27017 &> /dev/null &

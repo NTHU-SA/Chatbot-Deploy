@@ -72,6 +72,7 @@ kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot.yaml.subst
 kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-service.yaml
 kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-ingress.yaml
 
+# Push Notification
 cd NTHU-Chatbot-PushNotification
 cat Dockerfile | envsubst > Dockerfile.subst
 mv Dockerfile.subst Dockerfile

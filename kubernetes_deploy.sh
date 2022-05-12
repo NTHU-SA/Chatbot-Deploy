@@ -62,6 +62,8 @@ cat NTHU-Campus-Agent-LINE-Flask/API/baseAPI.py | envsubst > NTHU-Campus-Agent-L
 mv NTHU-Campus-Agent-LINE-Flask/API/baseAPI.py.subst NTHU-Campus-Agent-LINE-Flask/API/baseAPI.py
 
 cd NTHU-Campus-Agent-LINE-Flask
+cat Dockerfile | envsubst > Dockerfile.subst
+mv Dockerfile.subst Dockerfile
 cat Dockerfile | envsubst | docker build -t gcr.io/${PROJECT_ID}/nthu-line-flask .
 cd ..
 

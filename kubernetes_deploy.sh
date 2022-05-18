@@ -1,12 +1,13 @@
-# kubectl delete --all pods
+# kubectl delete daemonsets, replicasets, services, deployments, pods, rc, ingress --all --all-namespaces
 
 rm -rf repos
 mkdir repos
 cd repos
 
-git clone https://github.com/NTHU-SA/NTHU-Chatbot-API.git
-git clone https://github.com/NTHU-SA/NTHU-Chatbot.git
-git clone https://github.com/NTHU-SA/NTHU-Campus-Agent-LINE-Flask.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot-API.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Campus-Agent-LINE-Flask.git
+git clone --branch dev-push-notification https://github.com/NTHU-SA/NTHU-Chatbot-PushNotification
 
 gcloud container clusters get-credentials ${CLUSTER} --zone ${REGION}
 
@@ -61,6 +62,8 @@ cat NTHU-Campus-Agent-LINE-Flask/API/baseAPI.py | envsubst > NTHU-Campus-Agent-L
 mv NTHU-Campus-Agent-LINE-Flask/API/baseAPI.py.subst NTHU-Campus-Agent-LINE-Flask/API/baseAPI.py
 
 cd NTHU-Campus-Agent-LINE-Flask
+cat Dockerfile | envsubst > Dockerfile.subst
+mv Dockerfile.subst Dockerfile
 cat Dockerfile | envsubst | docker build -t gcr.io/${PROJECT_ID}/nthu-line-flask .
 cd ..
 
@@ -71,7 +74,43 @@ kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot.yaml.subst
 kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-service.yaml
 kubectl apply -f NTHU-Campus-Agent-LINE-Flask/gke/chatbot-ingress.yaml
 
+# Push Notification
+cd NTHU-Chatbot-PushNotification
+cat Dockerfile | envsubst > Dockerfile.subst
+mv Dockerfile.subst Dockerfile
+docker build -t gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification .
+cd ..
+
+docker push gcr.io/${PROJECT_ID}/nthu-chatbot-push-notification
+
+cat NTHU-Chatbot-PushNotification/gke/push-notification.yaml | envsubst > NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
+kubectl apply -f NTHU-Chatbot-PushNotification/gke/push-notification.yaml.subst 
+
+<<comment
+1. $ kubectl exec -it <pod name> -n default -- bash
+
+2. $ mongosh -u admin -p admin
+use admin
+db.createUser({
+    user: 'admin',
+    pwd: 'admin',
+    roles: [ { role: 'root', db: 'admin' } ]
+});
+
+3. mongo -u "admin" -p "admin" --authenticationDatabase "admin"
+use admin;
+db.grantRolesToUser('admin', [{ role: 'root', db: 'admin' }])
+
+4. port forward mongo to cloud shell
+comment
+
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
 # Import mongo files
 kubectl port-forward service/mongo-service 27017:27017 &> /dev/null &
 cd ..
 ./mongo-import.sh
+

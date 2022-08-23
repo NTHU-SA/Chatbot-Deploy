@@ -18,7 +18,7 @@ services:
     build: ../NTHU-Campus-Agent-LINE-Flask/
     restart: always
     ports:
-      - "5000:5000"
+      - "2053:5000"
     environment:
       - TZ=Asia/Taipei
     logging:
